@@ -23,6 +23,11 @@
       margin: 0;
     }
 
+    p{
+      color: #000000ff;
+      margin: 0;
+    }
+
     .container {
       max-width: 1000px;
       margin: 30px auto;
@@ -108,12 +113,39 @@
       color: #777;
       padding: 10px;
     }
+    <link
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet/dist/leaflet.css"
+/>
   </style>
 </head>
 <body>
 
+<script>
+  const mostReacentChange = "2025-07-10: Updated California law.";
+  const secondMostReacentChange = "2025-07-08: Added Arizona.";
+  const thirdMostReacentChange = "2025-07-05: Fixed Texas restrictions.";
+
+  document.getElementById("change").innerHTML = `
+    ${mostReacentChange}<br><br>
+    ${secondMostReacentChange}<br><br>
+    ${thirdMostReacentChange}
+  `;
+  
+  src="https://unpkg.com/leaflet/dist/leaflet.js";
+
+  const map = L.map('map').setView([37.8, -96], 4); // Center on USA
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+  }).addTo(map);
+
+  const marker = L.marker([34.05, -118.25]).addTo(map);
+  marker.bindPopup("<b>Los Angeles</b><br>Fireworks: Legal").openPopup();
+</script>
+
 <header>
-  <h1>🔥 FireworksLegal</h1>
+  <h1>🔥 Fireworks Legal</h1>
 </header>
 
 <div class="container">
@@ -128,10 +160,10 @@
     <span class="tag illegal">✘ Illegal</span>
   </div>
 
-  <div class="card">
-    <h2>🗺 Interactive Fireworks Legal Map</h2>
-    <p>[Map would appear here]</p>
-  </div>
+<div class="card">
+  <h2>🗺 Interactive Fireworks Legal Map</h2>
+  <div id="map" style="height: 400px; width: 100%; border-radius: 12px;"></div>
+</div>
 
   <div class="card">
     <h2>📍 Your Location</h2>
@@ -158,9 +190,7 @@
 
 <div class="card">
   <h2>🕒 Recent Updates</h2>
-  <p id="mostReacentChange">Most recent update will go here.</p>
-  <p id="secondMostReacentChange">Second most recent update.</p>
-  <p id="thirdMostReacentChange">Third most recent update.</p>
+  <p id="change"></p>
 </div>
 
 <div class="footer">
