@@ -156,10 +156,11 @@
     </div>
   </div>
 
-  <div class="card">
-    <h2>🕒 Recent Updates</h2>
-    <p>No recent updates available</p>
-  </div>
+<div class="card">
+  <h2>🕒 Recent Updates</h2>
+  <p id="mostReacentChange">Most recent update will go here.</p>
+  <p id="secondMostReacentChange">Second most recent update.</p>
+  <p id="thirdMostReacentChange">Third most recent update.</p>
 </div>
 
 <div class="footer">
