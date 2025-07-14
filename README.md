@@ -1,7 +1,13 @@
+<!DOCTYPE html>
 <html>
 <head>
   <title>FireworksLegal</title>
+
+  <!-- ✅ Correct Leaflet CSS placement -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+
   <style>
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f5f7fa;
@@ -20,6 +26,11 @@
 
     header h1 {
       color: #333;
+      margin: 0;
+    }
+
+    p{
+      color: #000000ff;
       margin: 0;
     }
 
@@ -113,7 +124,7 @@
 <body>
 
 <header>
-  <h1>🔥 FireworksLegal</h1>
+  <h1>🔥 Fireworks Legal</h1>
 </header>
 
 <div class="container">
@@ -130,7 +141,7 @@
 
   <div class="card">
     <h2>🗺 Interactive Fireworks Legal Map</h2>
-    <p>[Map would appear here]</p>
+    <div id="map" style="height: 400px; width: 100%; border-radius: 12px;"></div>
   </div>
 
   <div class="card">
@@ -141,31 +152,45 @@
   <div class="card">
     <h2>📊 Quick Stats</h2>
     <div class="stats">
-      <div class="stat" style="color: #16a34a;">
-        <span>2</span>Legal Counties
-      </div>
-      <div class="stat" style="color: #dc2626;">
-        <span>2</span>Illegal
-      </div>
-      <div class="stat" style="color: #f59e0b;">
-        <span>4</span>Restricted
-      </div>
-      <div class="stat" style="color: #6b7280;">
-        <span>8</span>Total
-      </div>
+      <!-- your stat divs here -->
     </div>
   </div>
 
-<div class="card">
-  <h2>🕒 Recent Updates</h2>
-  <p id="mostReacentChange">Most recent update will go here.</p>
-  <p id="secondMostReacentChange">Second most recent update.</p>
-  <p id="thirdMostReacentChange">Third most recent update.</p>
+  <div class="card">
+    <h2>🕒 Recent Updates</h2>
+    <p id="change"></p>
+  </div>
+
+  <div class="footer">
+    &copy; 2025 FireworksLegal | This information is for reference only.
+  </div>
 </div>
 
-<div class="footer">
-  &copy; 2025 FireworksLegal | This information is for reference only. Always verify with local authorities before use.
-</div>
+<!-- ✅ Correct Leaflet JS placement -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<!-- ✅ Wrap JS inside onload so it runs after everything is ready -->
+<script>
+  window.onload = function () {
+    const mostReacentChange = "2025-07-10: Updated California law.";
+    const secondMostReacentChange = "2025-07-08: Added Arizona.";
+    const thirdMostReacentChange = "2025-07-05: Fixed Texas restrictions.";
+
+    document.getElementById("change").innerHTML = `
+      ${mostReacentChange}<br><br>
+      ${secondMostReacentChange}<br><br>
+      ${thirdMostReacentChange}
+    `;
+
+    const map = L.map('map').setView([37.8, -96], 4);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '&copy; OpenStreetMap contributors',
+    }).addTo(map);
+
+    const marker = L.marker([34.05, -118.25]).addTo(map);
+    marker.bindPopup("<b>Los Angeles</b><br>Fireworks: Legal").openPopup();
+  };
+</script>
 
 </body>
 </html>
