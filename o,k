@@ -125,7 +125,7 @@
 
 <div class="container">
   <div class="search-bar">
-<input type="text" id="searchInput" placeholder="Search by state">
+<input type="text" id="searchInput" placeholder="Search by state, county, or ZIP code">
 <button onclick="searchLocation()">Search Law</button>
   </div>
 
@@ -136,32 +136,13 @@
   <p id="searchResult">Search for a location to see details here.</p>
 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   <div class="card">
     <h2>Interactive Fireworks Legal Map</h2>
     <div id="map" style="height: 400px; width: 100%; border-radius: 12px;"></div>
   </div>
 
   <div class="card">
-    <h2>Detailed Anylasis</h2>
+    <h2>detailed anylasis</h2>
     <p>Click on a county or use your location to see details</p>
   </div>
 
