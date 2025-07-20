@@ -67,12 +67,13 @@
       padding: 10px 16px;
       background: #f5f7fa;
       color: #000000;
-      z-index: 10;
+      z-index: -10;
     }
 
     .container {
-     max-width: 100%;
-     padding: 0 20px;
+     max-width: 1200px; 
+     margin: 0 auto;  
+     padding: 0 20px;   
     }
 
     .search-bar {
