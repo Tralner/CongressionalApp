@@ -6,12 +6,24 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
   <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f5f7fa;
       margin: 0;
       padding: 0;
+    }
+
+    .bill-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
+      gap: 20px;
+      width: 100%;
     }
 
     header {
@@ -59,9 +71,8 @@
     }
 
     .container {
-      max-width: 100%;
-      margin: 30px auto;
-      padding: 0 20px;
+     max-width: 100%;
+     padding: 0 20px;
     }
 
     .search-bar {
