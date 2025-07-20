@@ -33,8 +33,33 @@
       margin: 0;
     }
 
+    aside {
+      width: 28%;
+      padding-left: 5px;
+      margin-left: 5px;
+      float: right;
+      background-color: #f5f7fa;
+    }
+
+    beside {
+      width: 70%;
+      padding-right: 5px;
+      margin-right: 5px;
+      float: left;
+      background-color: #f5f7fa;
+    }
+
+    .topper {
+      position: sticky;
+      top: 0;
+      padding: 10px 16px;
+      background: #f5f7fa;
+      color: #000000;
+      z-index: 10;
+    }
+
     .container {
-      max-width: 1000px;
+      max-width: 100%;
       margin: 30px auto;
       padding: 0 20px;
     }
@@ -72,10 +97,6 @@
       font-size: 14px;
       color: white;
     }
-
-    .legal { background-color: #16a34a; }
-    .restricted { background-color: #f59e0b; }
-    .illegal { background-color: #dc2626; }
 
     .card {
       background-color: white;
@@ -119,9 +140,9 @@
 </head>
 <body>
 
-<header>
-  <h1>🔥 Fireworks Legal</h1>
-</header>
+<div class="topper" id="top_shelf">
+  <h1>Fireworks Legal</h1>
+</div>
 
 <div class="container">
   <div class="search-bar">
@@ -129,37 +150,17 @@
 <button onclick="searchLocation()">Search Law</button>
   </div>
 
-<br>
-
 <div class="card">
   <h2>Quick facts</h2>
   <p id="searchResult">Search for a location to see details here.</p>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+<beside>
   <div class="card">
     <h2>Interactive Fireworks Legal Map</h2>
-    <div id="map" style="height: 400px; width: 100%; border-radius: 12px;"></div>
+    <div id="map" style="height: 400px; width: 100%; border-radius: 12px; z-index: 1;"></div>
   </div>
-
+  </beside>
+<aside>
   <div class="card">
     <h2>Detailed Anylasis</h2>
     <p>Click on a county or use your location to see details</p>
@@ -169,9 +170,12 @@
     <h2>Recent Updates</h2>
     <p id="change"></p>
   </div>
+</aside>
+
+<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
   <div class="footer">
-    &copy; 2025 FireworksLegal | This information is for reference only.
+    2025 FireworksLegal | This information is for reference only.
   </div>
 </div>
 
@@ -525,4 +529,3 @@ async function searchLocation() {
 }
 </script>
 </body>
-</html
