@@ -61,6 +61,25 @@
       background-color: #f5f7fa;
     }
 
+    /* Remove GitHub Pages' default container padding */
+.container-lg {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+/* Ensure full-width layout */
+body, html {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+/* Force content to take full width */
+.main-content {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
     .topper {
       position: sticky;
       top: 0;
