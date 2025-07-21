@@ -49,6 +49,25 @@
       background-color: #f5f7fa;
     }
 
+    /* Remove GitHub Pages' default container padding */
+.container-lg {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
+/* Ensure full-width layout */
+body, html {
+  margin: 0 !important;
+  padding: 0 !important;
+  width: 100%;
+}
+
+/* Force content to take full width */
+.main-content {
+  max-width: 100% !important;
+  padding: 0 !important;
+}
+
     .topper {
       position: sticky;
       top: 0;
@@ -59,16 +78,16 @@
     }
 
     .container {
-      max-width: 100%;
-      margin: 30px auto;
-      padding: 0 20px;
+      max-width: 100% !important;
+      margin: 30px auto !important;
+      padding: 0 20px !important;
     }
 
     .search-bar {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      margin-bottom: 20px;
+      display: flex !important;
+      flex-wrap: wrap !important;
+      gap: 10px !important;
+      margin-bottom: 20px !important;
     }
 
     .search-bar input[type="text"] {
