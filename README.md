@@ -86,11 +86,11 @@ body, html {
       padding: 10px 16px;
       background: #f5f7fa;
       color: #000000;
-      z-index: 10;
+      z-index: -10;
     }
 
     .container {
-     max-width: 100%; 
+     max-width: 100% !important; 
      margin: 0 auto;  
      padding: 0 20px;   
     }
