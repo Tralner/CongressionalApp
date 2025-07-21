@@ -79,7 +79,7 @@ body, html {
 
     .container {
       max-width: 100% !important;
-      margin: 30px auto !important;
+      margin: 10px auto !important;
       padding: 0 20px !important;
     }
 
