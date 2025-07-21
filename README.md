@@ -78,8 +78,9 @@ body, html {
     }
 
     .container {
-      max-width: 100% !important;
+      max-width: 1300 !important;
       margin: 10px auto !important;
+      padding: 0 20px !important;
     }
 
     .search-bar {
