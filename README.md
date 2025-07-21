@@ -6,24 +6,12 @@
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
   <style>
-    body, html {
-      margin: 0;
-      padding: 0;
-      width: 100%;
-    }
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f5f7fa;
       margin: 0;
       padding: 0;
-    }
-
-    .bill-list {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Responsive grid */
-      gap: 20px;
-      width: 100%;
     }
 
     header {
@@ -61,38 +49,19 @@
       background-color: #f5f7fa;
     }
 
-    /* Remove GitHub Pages' default container padding */
-.container-lg {
-  max-width: 100% !important;
-  padding: 0 !important;
-}
-
-/* Ensure full-width layout */
-body, html {
-  margin: 0 !important;
-  padding: 0 !important;
-  width: 100%;
-}
-
-/* Force content to take full width */
-.main-content {
-  max-width: 100% !important;
-  padding: 0 !important;
-}
-
     .topper {
       position: sticky;
       top: 0;
       padding: 10px 16px;
       background: #f5f7fa;
       color: #000000;
-      z-index: -10;
+      z-index: 10;
     }
 
     .container {
-     max-width: 100% !important; 
-     margin: 0 auto;  
-     padding: 0 20px;   
+      max-width: 100%;
+      margin: 30px auto;
+      padding: 0 20px;
     }
 
     .search-bar {
