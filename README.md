@@ -51,7 +51,7 @@
 
     /* Remove GitHub Pages' default container padding */
 .container-lg {
-  max-width: 1100px !important;
+  max-width: 100% !important;
   padding: 0 !important;
 }
 
@@ -78,7 +78,7 @@ body, html {
     }
 
     .container {
-      max-width: 1100 !important;
+      max-width: 85% !important;
       margin: 10px auto !important;
       padding: 0 20px !important;
     }
