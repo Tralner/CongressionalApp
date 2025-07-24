@@ -78,7 +78,7 @@ body, html {
     }
 
     .container {
-      width: 100% !important;
+      width: 87% !important;
       margin: 10px auto !important;
       padding: 0 20px !important;
     }
