@@ -78,7 +78,7 @@ body, html {
     }
 
     .container {
-      max-width: 85% !important;
+      width: 100% !important;
       margin: 10px auto !important;
       padding: 0 20px !important;
     }
