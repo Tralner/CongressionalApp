@@ -1,56 +1,51 @@
+<!DOCTYPE html>
 <html>
 <head>
-
   <title>FireworksLegal</title>
-
-  <!-- ✅ Correct Leaflet CSS placement -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <!-- CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/styles.css"> <!-- Ensure path is correct -->
 </head>
 <body>
-
-<header class="topper">
-  <h1>Fireworks Laws Made Simple</h1>
-  <div class="search-bar">
-    <input type="text" id="searchInput" placeholder="🔍 Search by state (e.g., 'CA' or 'California')">
-    <button onclick="searchLocation()">Search</button>
-  </div>
-</header>
-
-<div class="card">
-  <h2>Quick facts</h2>
-  <p id="searchResult">Search for a location to see details here.</p>
-</div>
-<beside>
-  <div class="card">
-    <h2>Interactive Fireworks Legal Map</h2>
-    <div id="map" style="height: 400px; width: 100%; border-radius: 12px; z-index: 1;"></div>
-  </div>
-  </beside>
-<aside>
-  <div class="card">
-    <h2>Detailed Anylasis</h2>
-    <p>Click on a county or use your location to see details</p>
-  </div>
+  <header class="topper">
+    <h1>Fireworks Laws Made Simple</h1>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="🔍 Search by state (e.g., 'CA' or 'California')">
+      <button onclick="searchLocation()">Search</button>
+    </div>
+  </header>
 
   <div class="card">
-    <h2>Recent Updates</h2>
-    <p id="change"></p>
+    <h2>Quick facts</h2>
+    <p id="searchResult">Search for a location to see details here.</p>
   </div>
-</aside>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+  <div class="main-content">  <!-- Replaced <beside> -->
+    <div class="card">
+      <h2>Interactive Fireworks Legal Map</h2>
+      <div id="map" style="height: 400px; width: 100%; border-radius: 12px;"></div>
+    </div>
+  </div>
 
-  <div class="footer">
+  <aside>  <!-- Valid HTML5 -->
+    <div class="card">
+      <h2>Detailed Analysis</h2>  <!-- Fixed typo -->
+      <p>Click on a county or use your location to see details</p>
+    </div>
+    <div class="card">
+      <h2>Recent Updates</h2>
+      <p id="change"></p>
+    </div>
+  </aside>
+
+  <footer class="footer">
     2025 FireworksLegal | This information is for reference only.
-  </div>
-</div>
+  </footer>
 
-<!-- Correct Leaflet JS placement -->
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-<!--do not dare to touch this-->
-<!--think about the gass prices-->
-
-<script src="js/script.js"></script>
-
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="js/script.js"></script> <!-- Ensure path is correct -->
 </body>
+</html>
