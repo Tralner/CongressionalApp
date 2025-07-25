@@ -92,10 +92,10 @@ body, html {
     }
 
     .search-bar input[type="text"] {
-      flex: 1;
       padding: 10px;
       border-radius: 8px;
       border: 1px solid #ccc;
+      width: 500px;
     }
 
     .search-bar button {
