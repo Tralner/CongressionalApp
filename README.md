@@ -1,20 +1,11 @@
 <html>
 <head>
-  <title>FireworksLegal</title>
+  {{<title>FireworksLegal</title>
 
   <!-- ✅ Correct Leaflet CSS placement -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
   <style>
-
-    .header, .site-header {
-      display: none !important;
-    }
-
-    h1.unwanted-title {
-      display: none;
-    }
-
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f5f7fa;
@@ -203,10 +194,10 @@ body, html {
       color: #c62828;
       font-weight: bold;
     }
-  </style>
+  </style>}}
 </head>
 <body>
-
+{{
 <header class="topper">
   <h1>Fireworks Laws Made Simple</h1>
   <div class="search-bar">
@@ -649,5 +640,5 @@ async function searchLocation() {
     `;
   }
 }
-</script>
+</script>}}
 </body>
