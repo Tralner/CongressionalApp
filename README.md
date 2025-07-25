@@ -1,6 +1,6 @@
 <html>
 <head>
-  {{<title>FireworksLegal</title>
+  <title>FireworksLegal</title>
 
   <!-- ✅ Correct Leaflet CSS placement -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
@@ -194,10 +194,10 @@ body, html {
       color: #c62828;
       font-weight: bold;
     }
-  </style>}}
+  </style>
 </head>
 <body>
-{{
+
 <header class="topper">
   <h1>Fireworks Laws Made Simple</h1>
   <div class="search-bar">
@@ -640,5 +640,5 @@ async function searchLocation() {
     `;
   }
 }
-</script>}}
+</script>
 </body>
