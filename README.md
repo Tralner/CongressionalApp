@@ -7,6 +7,14 @@
 
   <style>
 
+    .header, .site-header {
+      display: none !important;
+    }
+
+    h1.unwanted-title {
+      display: none;
+    }
+
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       background-color: #f5f7fa;
@@ -126,18 +134,19 @@ body, html {
     }
 
     .card {
-      background-color: white;
-      border: 1px solid #ddd;
-      border-radius: 12px;
-      padding: 20px;
-      margin-bottom: 20px;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      background: var(--white);
+      border: 1px solid var(--medium-gray);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
     }
 
     .card h2 {
+      color: var(--darker-gray);
+      border-bottom: 1px solid var(--medium-gray);
+      padding-bottom: 0.5rem;
       margin-top: 0;
-      font-size: 18px;
-      color: #333;
     }
 
     .stats {
