@@ -41,6 +41,8 @@
       background-color: #f5f7fa;
     }
 
+    
+
     beside {
       width: 70%;
       padding-right: 5px;
@@ -72,7 +74,7 @@ body, html {
       position: sticky;
       top: 0;
       padding: 10px 16px;
-      background: #f5f7fa;
+      background: #ffffff;
       color: #000000;
       z-index: 10;
     }
@@ -107,6 +109,12 @@ body, html {
       transition: background-color 0.3s;
     }
 
+    :root {
+  --primary: #2563eb;       /* Deep blue */
+  --secondary: #dc2626;    /* Red */
+  --accent: #f59e0b;       /* Gold (for highlights) */
+  --light-bg: #f8fafc;     /* Off-white background */
+}
 
     .tag {
       display: inline-block;
@@ -156,7 +164,15 @@ body, html {
       padding: 10px;
     }
     
-    /* Add to your existing styles */
+    :root {
+      --white: #ffffff;
+      --light-gray: #f5f7fa;
+      --medium-gray: #e1e5eb;
+      --dark-gray: #6b7280;
+      --darker-gray: #374151;
+      --accent: #3b82f6;
+    }
+
     .status-legal {
       color: #2e7d32;
       font-weight: bold;
@@ -182,15 +198,13 @@ body, html {
 </head>
 <body>
 
-<div class="topper" id="top_shelf">
-  <h1>Fireworks Legal</h1>
-</div>
-
-<div class="container">
+<header class="topper">
+  <h1>Fireworks Laws Made Simple</h1>
   <div class="search-bar">
-<input type="text" id="searchInput" placeholder="Search by state">
-<button onclick="searchLocation()">Search Law</button>
+    <input type="text" id="searchInput" placeholder="🔍 Search by state (e.g., 'CA' or 'California')">
+    <button onclick="searchLocation()">Search</button>
   </div>
+</header>
 
 <div class="card">
   <h2>Quick facts</h2>
@@ -223,6 +237,8 @@ body, html {
 
 <!-- Correct Leaflet JS placement -->
 <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<!--do not dare to touch this-->
+<!--think about the gass prices-->
 
 <script>
   let map;
