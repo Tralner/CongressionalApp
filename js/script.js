@@ -1,4 +1,27 @@
-  let map;
+// DOM Elements
+const expandBtn = document.getElementById('expandBtn');
+const collapseBtn = document.getElementById('collapseBtn');
+const fullAnalysis = document.getElementById('fullAnalysis');
+const analysisSummary = document.getElementById('analysisSummary');
+
+// Toggle visibility
+expandBtn.addEventListener('click', () => {
+  fullAnalysis.classList.remove('hidden');
+  expandBtn.classList.add('hidden');
+});
+
+collapseBtn.addEventListener('click', () => {
+  fullAnalysis.classList.add('hidden');
+  expandBtn.classList.remove('hidden');
+});
+
+function updateAnalysis(data) {
+  analysisSummary.textContent = `Quick overview: ${data.summary}`;
+  document.getElementById('analysisLegalText').textContent = data.legalDetails;
+  document.getElementById('analysisSafetyText').textContent = data.safetyTips;
+}
+
+let map;
 
   // 🎆 Data for search
 const fireworksData = {
@@ -390,6 +413,12 @@ async function searchLocation() {
       marker.openPopup();
     }
     
+      updateAnalysis({
+    summary: `In ${stateInfo.name}, fireworks are ${stateInfo.status.toLowerCase()}.`,
+    legalDetails: stateInfo.summary, // Use your existing data
+    safetyTips: "Always check local ordinances. Never use fireworks near dry vegetation."
+  });
+
   } catch (error) {
     console.error("Search error:", error);
     resultElement.innerHTML = `
@@ -397,33 +426,4 @@ async function searchLocation() {
       <p>Please try again later or check your internet connection.</p>
     `;
   }
-
-  updateAnalysis({
-    summary: `In ${stateInfo.name}, fireworks are ${stateInfo.status.toLowerCase()}.`,
-    legalDetails: stateInfo.summary, // Use your existing data
-    safetyTips: "Always check local ordinances. Never use fireworks near dry vegetation."
-  });
-
-}
-// DOM Elements
-const expandBtn = document.getElementById('expandBtn');
-const collapseBtn = document.getElementById('collapseBtn');
-const fullAnalysis = document.getElementById('fullAnalysis');
-const analysisSummary = document.getElementById('analysisSummary');
-
-// Toggle visibility
-expandBtn.addEventListener('click', () => {
-  fullAnalysis.classList.remove('hidden');
-  expandBtn.classList.add('hidden');
-});
-
-collapseBtn.addEventListener('click', () => {
-  fullAnalysis.classList.add('hidden');
-  expandBtn.classList.remove('hidden');
-});
-
-function updateAnalysis(data) {
-  analysisSummary.textContent = `Quick overview: ${data.summary}`;
-  document.getElementById('analysisLegalText').textContent = data.legalDetails;
-  document.getElementById('analysisSafetyText').textContent = data.safetyTips;
 }
