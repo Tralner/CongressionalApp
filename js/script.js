@@ -1,31 +1,7 @@
-// DOM Elements
-const expandBtn = document.getElementById('expandBtn');
-const collapseBtn = document.getElementById('collapseBtn');
-const fullAnalysis = document.getElementById('fullAnalysis');
-const analysisSummary = document.getElementById('analysisSummary');
-
-// Toggle visibility
-expandBtn.addEventListener('click', () => {
-  fullAnalysis.classList.remove('hidden');
-  expandBtn.classList.add('hidden');
-});
-
-collapseBtn.addEventListener('click', () => {
-  fullAnalysis.classList.add('hidden');
-  expandBtn.classList.remove('hidden');
-});
-
-function updateAnalysis(data) {
-  analysisSummary.textContent = `Quick overview: ${data.summary}`;
-  document.getElementById('analysisLegalText').textContent = data.legalDetails;
-  document.getElementById('analysisSafetyText').textContent = data.safetyTips;
-}
-
 let map;
 
-  // 🎆 Data for search
 const fireworksData = {
-  "al": {
+"al": {
     name: "Alabama",
     status: "Legal",
     summary: "Most consumer fireworks are legal for persons over 16. Local restrictions may apply.",
@@ -48,9 +24,7 @@ const fireworksData = {
   "ca": {
     name: "California",
     status: "Restricted",
-    summary: "Only 'Safe and Sane' fireworks allowed in approved areas.",
-    legalDetails: "Permits required for professional displays. Banned in national forests.",
-    safetyTips: "Keep water nearby. Supervise children closely."
+    summary: "Only 'Safe and Sane' fireworks allowed in approved areas. Complete ban in some counties.",
   },
   "co": {
     name: "Colorado",
@@ -279,7 +253,43 @@ const fireworksData = {
   }
 };
 
-  // 🔁 Page load
+// DOM Elements
+const expandBtn = document.getElementById('expandBtn');
+const collapseBtn = document.getElementById('collapseBtn');
+const fullAnalysis = document.getElementById('fullAnalysis');
+const analysisSummary = document.getElementById('analysisSummary');
+
+// Initialize analysis toggle
+function initAnalysisToggle() {
+  if (expandBtn && collapseBtn && fullAnalysis) {
+    expandBtn.addEventListener('click', () => {
+      fullAnalysis.classList.remove('hidden');
+      expandBtn.classList.add('hidden');
+    });
+
+    collapseBtn.addEventListener('click', () => {
+      fullAnalysis.classList.add('hidden');
+      expandBtn.classList.remove('hidden');
+    });
+  }
+}
+
+// Update analysis content
+function updateAnalysis(stateInfo) {
+  if (!analysisSummary || !fullAnalysis) return;
+
+  const defaultSafetyTips = "Always check local ordinances. Never use fireworks near dry vegetation.";
+  
+  analysisSummary.textContent = `Quick overview: In ${stateInfo.name}, fireworks are ${stateInfo.status.toLowerCase()}.`;
+  
+  document.getElementById('analysisLegalText').textContent = 
+    stateInfo.legalDetails || stateInfo.summary;
+    
+  document.getElementById('analysisSafetyText').textContent = 
+    stateInfo.safetyTips || defaultSafetyTips;
+}
+
+// 🔁 Page load
 window.onload = function () {
   // Recent Updates
   document.getElementById("change").innerHTML = `
@@ -288,14 +298,17 @@ window.onload = function () {
     2025-07-05: Fixed Texas restrictions.
   `;
 
+  // Initialize map
   map = L.map('map').setView([37.8, -96], 4);
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '&copy; OpenStreetMap contributors',
   }).addTo(map);
+
+  // Initialize analysis toggle
+  initAnalysisToggle();
 };
 
-  // 🔍 Handle search
-// 🔍 Handle search - improved version
+// 🔍 Handle search
 async function searchLocation() {
   const input = document.getElementById('searchInput').value.trim().toLowerCase();
   const resultElement = document.getElementById("searchResult");
@@ -309,11 +322,10 @@ async function searchLocation() {
   resultElement.innerHTML = "Searching...";
   
   try {
-    // First try to match against our fireworks data directly
     let stateInfo = null;
     let stateName = "";
     
-    // Check for exact abbreviation match (like "ca" for California)
+    // Check for exact abbreviation match
     if (input.length === 2 && fireworksData[input]) {
       stateInfo = fireworksData[input];
       stateName = stateInfo.name;
@@ -329,9 +341,8 @@ async function searchLocation() {
       }
     }
 
-    // If we found state info, use it
     if (stateInfo) {
-      // Search for the state's coordinates
+      // Search for coordinates
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(stateName)}&countrycodes=us&limit=1`);
       if (!response.ok) throw new Error("Network response was not ok");
       
@@ -343,7 +354,7 @@ async function searchLocation() {
 
       const { lat, lon } = results[0];
       
-      // Update map view
+      // Update map
       map.setView([lat, lon], 7);
       L.marker([lat, lon]).addTo(map)
         .bindPopup(`
@@ -353,15 +364,18 @@ async function searchLocation() {
         `)
         .openPopup();
 
-      // Update search result text
+      // Update results
       resultElement.innerHTML = `
         <h3>${stateInfo.name}</h3>
         <p><strong>Fireworks Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
         <p><strong>Details:</strong> ${stateInfo.summary}</p>
       `;
+
+      // Update analysis section
+      updateAnalysis(stateInfo);
     } 
-    // If no direct match, try a general location search
     else {
+      // Handle location search
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(input)}&countrycodes=us&limit=1`);
       if (!response.ok) throw new Error("Network response was not ok");
       
@@ -373,7 +387,7 @@ async function searchLocation() {
 
       const { lat, lon, display_name } = results[0];
       
-      // Try to find which state this location is in
+      // Try to find state
       let foundState = null;
       for (const [abbrev, data] of Object.entries(fireworksData)) {
         if (display_name.toLowerCase().includes(data.name.toLowerCase()) || 
@@ -383,7 +397,7 @@ async function searchLocation() {
         }
       }
 
-      // Update map view
+      // Update map
       map.setView([lat, lon], 9);
       const marker = L.marker([lat, lon]).addTo(map);
       
@@ -401,6 +415,8 @@ async function searchLocation() {
           <p><strong>Details:</strong> ${foundState.summary}</p>
           <p class="note">Note: Local regulations may vary. Check with your city/county.</p>
         `;
+
+        updateAnalysis(foundState);
       } else {
         marker.bindPopup(`<b>${display_name}</b><br>No fireworks data available`);
         
@@ -412,13 +428,6 @@ async function searchLocation() {
       }
       marker.openPopup();
     }
-    
-      updateAnalysis({
-    summary: `In ${stateInfo.name}, fireworks are ${stateInfo.status.toLowerCase()}.`,
-    legalDetails: stateInfo.summary, // Use your existing data
-    safetyTips: "Always check local ordinances. Never use fireworks near dry vegetation."
-  });
-
   } catch (error) {
     console.error("Search error:", error);
     resultElement.innerHTML = `
