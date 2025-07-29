@@ -1,51 +1,66 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <title>FireworksLegal</title>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- CSS -->
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="css/styles.css"> <!-- Ensure path is correct -->
-</head>
-<body>
-  <header class="topper">
-    <h1>Fireworks Laws Made Simple</h1>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="🔍 Search by state (e.g., 'CA' or 'California')">
-      <button onclick="searchLocation()">Search</button>
-    </div>
-  </header>
+  <head>
+    <title>FireworksLegal</title>
 
-  <div class="card">
-    <h2>Quick facts</h2>
-    <p id="searchResult">Search for a location to see details here.</p>
-  </div>
+    <meta charset="UTF-8">
 
-<beside>
-  <div class="card">
-    <h2>Interactive Fireworks Legal Map</h2>
-    <div id="map" style="height: 400px; width: 100%; border-radius: 12px; z-index: 1;"></div>
-  </div>
-</beside>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
 
-  <aside>  <!-- Valid HTML5 -->
+    <link rel="stylesheet" href="css/styles.css">
+
+  </head>
+  <body>
+
+    <header class="topper">
+      <h1>Fireworks Laws Made Simple</h1>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="🔍 Search by state (e.g., 'CA' or 'California')">
+        <button onclick="searchLocation()">Search</button>
+      </div>
+    </header>
+
     <div class="card">
-      <h2>Detailed Analysis</h2>  <!-- Fixed typo -->
-      <p>Click on a county or use your location to see details</p>
+      <h2>Quick facts</h2>
+      <p id="searchResult">Search for a location to see details here.</p>
     </div>
+
+  <beside>
     <div class="card">
-      <h2>Recent Updates</h2>
-      <p id="change"></p>
+      <h2>Interactive Fireworks Legal Map</h2>
+      <div id="map" style="height: 400px; width: 100%; border-radius: 12px; z-index: 1;"></div>
     </div>
-  </aside>
+  </beside>
+
+<aside>
+  <div class="card">
+    <h2>Detailed Analysis</h2>
+    <div id="analysisSummary">Click on a county or use your location to see details.</div>
+    <div id="fullAnalysis" class="hidden">
+      <h3>Legal Breakdown</h3>
+      <p id="analysisLegalText"></p>
+      <h3>Safety Considerations</h3>
+      <p id="analysisSafetyText"></p>
+      <button id="collapseBtn">Show Less</button>
+    </div>
+    <button id="expandBtn">Read Full Analysis</button>
+  </div>
+</aside>
+
+  <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
 
   <footer class="footer">
     2025 FireworksLegal | This information is for reference only.
   </footer>
 
+  <!-- this is the correct position for the leaflet map-->
   <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <!--do not move this-->
+  <!--thnk about the gass prices-->
+
   <script src="js/script.js"></script>
-</body>
+  
+  </body>
 </html>

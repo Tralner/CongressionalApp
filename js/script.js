@@ -25,7 +25,9 @@ const fireworksData = {
   "ca": {
     name: "California",
     status: "Restricted",
-    summary: "Only 'Safe and Sane' fireworks allowed in approved areas. Complete ban in some counties.",
+    summary: "Only 'Safe and Sane' fireworks allowed in approved areas.",
+    legalDetails: "Permits required for professional displays. Banned in national forests.",
+    safetyTips: "Keep water nearby. Supervise children closely."
   },
   "co": {
     name: "Colorado",
@@ -255,20 +257,19 @@ const fireworksData = {
 };
 
   // 🔁 Page load
-  window.onload = function () {
-    // Recent Updates
-    document.getElementById("change").innerHTML = `
-      2025-07-10: Updated California law.<br><br>
-      2025-07-08: Added Arizona.<br><br>
-      2025-07-05: Fixed Texas restrictions.
-    `;
+window.onload = function () {
+  // Recent Updates
+  document.getElementById("change").innerHTML = `
+    2025-07-10: Updated California law.<br><br>
+    2025-07-08: Added Arizona.<br><br>
+    2025-07-05: Fixed Texas restrictions.
+  `;
 
-    // 🗺 Initialize the map
-    map = L.map('map').setView([37.8, -96], 4);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(map);
-  };
+  map = L.map('map').setView([37.8, -96], 4);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+  }).addTo(map);
+};
 
   // 🔍 Handle search
 // 🔍 Handle search - improved version
@@ -396,4 +397,33 @@ async function searchLocation() {
       <p>Please try again later or check your internet connection.</p>
     `;
   }
+
+  updateAnalysis({
+    summary: `In ${stateInfo.name}, fireworks are ${stateInfo.status.toLowerCase()}.`,
+    legalDetails: stateInfo.summary, // Use your existing data
+    safetyTips: "Always check local ordinances. Never use fireworks near dry vegetation."
+  });
+
+}
+// DOM Elements
+const expandBtn = document.getElementById('expandBtn');
+const collapseBtn = document.getElementById('collapseBtn');
+const fullAnalysis = document.getElementById('fullAnalysis');
+const analysisSummary = document.getElementById('analysisSummary');
+
+// Toggle visibility
+expandBtn.addEventListener('click', () => {
+  fullAnalysis.classList.remove('hidden');
+  expandBtn.classList.add('hidden');
+});
+
+collapseBtn.addEventListener('click', () => {
+  fullAnalysis.classList.add('hidden');
+  expandBtn.classList.remove('hidden');
+});
+
+function updateAnalysis(data) {
+  analysisSummary.textContent = `Quick overview: ${data.summary}`;
+  document.getElementById('analysisLegalText').textContent = data.legalDetails;
+  document.getElementById('analysisSafetyText').textContent = data.safetyTips;
 }

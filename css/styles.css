@@ -1,48 +1,46 @@
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-color: #f5f7fa;
-      margin: 0;
-      padding: 0;
-    }
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f5f7fa;
+  margin: 0;
+  padding: 0;
+}
 
-    header {
-      background-color: #ffffff;
-      padding: 20px;
-      border-bottom: 1px solid #ddd;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
+header {
+  background-color: #ffffff;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
-    header h1 {
-      color: #333;
-      margin: 0;
-    }
+header h1 {
+  color: #333;
+  margin: 0;
+}
 
-    p{
-      color: #000000ff;
-      margin: 0;
-    }
+p{
+  color: #000000ff;
+  margin: 0;
+}
 
-    aside {
-      width: 28%;
-      padding-left: 5px;
-      margin-left: 5px;
-      float: right;
-      background-color: #f5f7fa;
-    }
+aside {
+  width: 28%;
+  padding-left: 5px;
+  margin-left: 5px;
+  float: right;
+  background-color: #f5f7fa;
+}   
 
-    
+beside {
+  width: 70%;
+  padding-right: 5px;
+  margin-right: 5px;
+  float: left;
+  background-color: #f5f7fa;
+}
 
-    beside {
-      width: 70%;
-      padding-right: 5px;
-      margin-right: 5px;
-      float: left;
-      background-color: #f5f7fa;
-    }
-
-    /* Remove GitHub Pages' default container padding */
+/* Remove GitHub Pages' default container padding */
 .container-lg {
   max-width: 100% !important;
   padding: 0 !important;
@@ -61,128 +59,143 @@ body, html {
   padding: 0 !important;
 }
 
-    .topper {
-      position: sticky;
-      top: 0;
-      padding: 10px 16px;
-      background: #ffffff;
-      color: #000000;
-      z-index: 10;
-    }
-
-    .container {
-      width: 87% !important;
-      margin: 10px auto !important;
-      padding: 0 20px !important;
-    }
-
-    .search-bar {
-      display: flex !important;
-      flex-wrap: wrap !important;
-      gap: 10px !important;
-      margin-bottom: 20px !important;
-    }
-
-    .search-bar input[type="text"] {
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid #ccc;
-      width: 500px;
-    }
-
-    .search-bar button {
-      background-color: #2563eb;
-      color: white;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    :root {
-  --primary: #2563eb;       /* Deep blue */
-  --secondary: #dc2626;    /* Red */
-  --accent: #f59e0b;       /* Gold (for highlights) */
-  --light-bg: #f8fafc;     /* Off-white background */
+.topper {
+  position: sticky;
+  top: 0;
+  padding: 10px 16px;
+  background: #ffffff;
+  color: #000000;
+  z-index: 10;
 }
 
-    .tag {
-      display: inline-block;
-      margin-right: 10px;
-      padding: 6px 12px;
-      border-radius: 12px;
-      font-size: 14px;
-      color: white;
-    }
+.container {
+  width: 87% !important;
+  margin: 10px auto !important;
+  padding: 0 20px !important;
+}
 
-    .card {
-      background: var(--white);
-      border: 1px solid var(--medium-gray);
-      border-radius: 8px;
-      padding: 1.5rem;
-      margin-bottom: 1.5rem;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
-    }
+.search-bar {
+  display: flex !important;
+  flex-wrap: wrap !important;
+  gap: 10px !important;
+  margin-bottom: 20px !important;
+}
 
-    .card h2 {
-      color: var(--darker-gray);
-      border-bottom: 1px solid var(--medium-gray);
-      padding-bottom: 0.5rem;
-      margin-top: 0;
-    }
+.search-bar input[type="text"] {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  width: 500px;
+}
 
-    .stats {
-      display: flex;
-      justify-content: space-around;
-      text-align: center;
-      margin-top: 10px;
-    }
+.search-bar button {
+  background-color: #2563eb;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
 
-    .stat {
-      font-size: 16px;
-    }
+.tag {
+  display: inline-block;
+  margin-right: 10px;
+  padding: 6px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  color: white;
+}
 
-    .stat span {
-      font-weight: bold;
-      display: block;
-      font-size: 20px;
-    }
+.card {
+  background: var(--white);
+  border: 1px solid var(--medium-gray);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+}
 
-    .footer {
-      text-align: center;
-      font-size: 13px;
-      color: #777;
-      padding: 10px;
-    }
+.card h2 {
+  color: var(--darker-gray);
+  border-bottom: 1px solid var(--medium-gray);
+  padding-bottom: 0.5rem;
+  margin-top: 0;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.stat {
+  font-size: 16px;
+}
+
+.stat span {
+  font-weight: bold;
+  display: block;
+  font-size: 20px;
+}
+
+.footer {
+  text-align: center;
+  font-size: 13px;
+  color: #777;
+  padding: 10px;
+}
     
-    :root {
-      --white: #ffffff;
-      --light-gray: #f5f7fa;
-      --medium-gray: #e1e5eb;
-      --dark-gray: #6b7280;
-      --darker-gray: #374151;
-      --accent: #3b82f6;
-    }
+:root {
+  --white: #ffffff;
+  --light-gray: #f5f7fa;
+  --medium-gray: #e1e5eb;
+  --dark-gray: #6b7280;
+  --darker-gray: #374151;
+  --accent: #3b82f6;
+}
 
-    .status-legal {
-      color: #2e7d32;
-      font-weight: bold;
-    }
-    .status-restricted {
-      color: #ff8f00;
-      font-weight: bold;
-    }
-    .status-illegal {
-      color: #c62828;
-      font-weight: bold;
-    }
-    .note {
-      font-size: 0.9em;
-      color: #666;
-      font-style: italic;
-    }
-    .error {
-      color: #c62828;
-      font-weight: bold;
-    }
+.status-legal {
+  color: #2e7d32;
+  font-weight: bold;
+}
+
+.status-restricted {
+  color: #ff8f00;
+  font-weight: bold;
+}
+
+.status-illegal {
+  color: #c62828;
+  font-weight: bold;
+}
+
+.note {
+  font-size: 0.9em;
+  color: #666;
+  font-style: italic;
+}
+
+.error {
+  color: #c62828;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+#expandBtn, #collapseBtn {
+  background: #3b82f6;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+#collapseBtn {
+  background: #6b7280;
+}
