@@ -7,7 +7,7 @@
   
   <!-- CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="css/styles.css"> <!-- Ensure path is correct -->
+  <link rel="stylesheet" href="css/styles.css">`a
 </head>
 <body>
   <header class="topper">
@@ -23,17 +23,21 @@
     <p id="searchResult">Search for a location to see details here.</p>
   </div>
 
-<beside>
-  <div class="card">
-    <h2>Interactive Fireworks Legal Map</h2>
-    <div id="map" style="height: 400px; width: 100%; border-radius: 12px; z-index: 1;"></div>
-  </div>
-</beside>
-
-  <aside>  <!-- Valid HTML5 -->
+  <beside>
     <div class="card">
-      <h2>Detailed Analysis</h2>  <!-- Fixed typo -->
-      <p>Click on a county or use your location to see details</p>
+      <h2>Interactive Fireworks Legal Map</h2>
+      <div id="map" style="height: 400px; width: 100%; border-radius: 12px; z-index: 1;"></div>
+    </div>
+  </beside>
+
+  <aside>
+    <div class="card">
+      <h2>Detailed Analysis</h2>
+      <div id="detailedAnalysis">
+        <p>Search for a state to see detailed legal analysis here.</p>
+      </div>
+      <button id="expandBtn" class="hidden">Show Full Legal Details</button>
+      <button id="collapseBtn" class="hidden">Hide Full Details</button>
     </div>
     <div class="card">
       <h2>Recent Updates</h2>
