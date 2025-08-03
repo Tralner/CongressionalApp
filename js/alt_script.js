@@ -1,9 +1,7 @@
-// 1. First load the fireworks data (remove the quotes around script tag)
-<script src="js/fireworksData.js"></script>
-
-// 2. Then your main script
 let map;
 
+<script src="js/fireworksData.js"></script>
+''
 // DOM Elements
 const expandBtn = document.getElementById('expandBtn');
 const collapseBtn = document.getElementById('collapseBtn');
@@ -69,16 +67,20 @@ async function searchLocation() {
     return;
   }
 
+  // Show loading state
   resultElement.innerHTML = "Searching...";
   
   try {
     let stateInfo = null;
     let stateName = "";
     
+    // Check for exact abbreviation match
     if (input.length === 2 && fireworksData[input]) {
       stateInfo = fireworksData[input];
       stateName = stateInfo.name;
-    } else {
+    } 
+    // Check for full state name match
+    else {
       for (const [abbrev, data] of Object.entries(fireworksData)) {
         if (data.name.toLowerCase() === input) {
           stateInfo = data;
@@ -89,6 +91,7 @@ async function searchLocation() {
     }
 
     if (stateInfo) {
+      // Search for coordinates
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(stateName)}&countrycodes=us&limit=1`);
       if (!response.ok) throw new Error("Network response was not ok");
       
@@ -100,6 +103,7 @@ async function searchLocation() {
 
       const { lat, lon } = results[0];
       
+      // Update map
       map.setView([lat, lon], 7);
       L.marker([lat, lon]).addTo(map)
         .bindPopup(`
@@ -109,51 +113,75 @@ async function searchLocation() {
         `)
         .openPopup();
 
+      // Update results
       resultElement.innerHTML = `
         <h3>${stateInfo.name}</h3>
-        <p><strong>Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
+        <p><strong>Fireworks Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
         <p><strong>Details:</strong> ${stateInfo.summary}</p>
       `;
 
+      // Update analysis section
       updateAnalysis(stateInfo);
-    } else {
-      // Handle city/county search
+    } 
+    else {
+      // Handle location search
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(input)}&countrycodes=us&limit=1`);
-      const results = await response.json();
+      if (!response.ok) throw new Error("Network response was not ok");
       
+      const results = await response.json();
       if (results.length === 0) {
-        resultElement.innerHTML = "Location not found.";
+        resultElement.innerHTML = "Location not found. Please try a different search term.";
         return;
       }
 
       const { lat, lon, display_name } = results[0];
-      map.setView([lat, lon], 9);
-      const marker = L.marker([lat, lon]).addTo(map);
       
-      // Find containing state
+      // Try to find state
       let foundState = null;
       for (const [abbrev, data] of Object.entries(fireworksData)) {
-        if (display_name.includes(data.name) || display_name.includes(`, ${abbrev.toUpperCase()}`)) {
+        if (display_name.toLowerCase().includes(data.name.toLowerCase()) || 
+            display_name.toLowerCase().includes(`, ${abbrev.toUpperCase()}`)) {
           foundState = data;
           break;
         }
       }
 
+      // Update map
+      map.setView([lat, lon], 9);
+      const marker = L.marker([lat, lon]).addTo(map);
+      
       if (foundState) {
-        marker.bindPopup(`<b>${display_name}</b><br>State: ${foundState.name}<br>Status: ${foundState.status}`);
+        marker.bindPopup(`
+          <b>${display_name}</b><br>
+          Status: ${foundState.status}<br>
+          Summary: ${foundState.summary}
+        `);
+        
         resultElement.innerHTML = `
           <h3>${display_name}</h3>
-          <p>Follows ${foundState.name} state laws: ${foundState.status}</p>
-          <p class="note">Local rules may vary.</p>
+          <p><strong>State:</strong> ${foundState.name}</p>
+          <p><strong>Fireworks Status:</strong> <span class="status-${foundState.status.toLowerCase()}">${foundState.status}</span></p>
+          <p><strong>Details:</strong> ${foundState.summary}</p>
+          <p class="note">Note: Local regulations may vary. Check with your city/county.</p>
         `;
+
         updateAnalysis(foundState);
       } else {
-        marker.bindPopup(`<b>${display_name}</b><br>No state data found`);
-        resultElement.innerHTML = `<p>No state regulations found for this location.</p>`;
+        marker.bindPopup(`<b>${display_name}</b><br>No fireworks data available`);
+        
+        resultElement.innerHTML = `
+          <h3>${display_name}</h3>
+          <p>No fireworks regulations data available for this area.</p>
+          <p>Please check with local authorities.</p>
+        `;
       }
+      marker.openPopup();
     }
   } catch (error) {
     console.error("Search error:", error);
-    resultElement.innerHTML = `<p class="error">Search failed. Please try again.</p>`;
+    resultElement.innerHTML = `
+      <p class="error">An error occurred during search.</p>
+      <p>Please try again later or check your internet connection.</p>
+    `;
   }
 }
