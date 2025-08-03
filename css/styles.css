@@ -199,9 +199,3 @@ body, html {
 #collapseBtn {
   background: #6b7280;
 }
-
-.hidden { display: none; }
-.status-legal { color: green; }
-.status-restricted { color: orange; }
-.status-illegal { color: red; }
-.error { color: darkred; }
