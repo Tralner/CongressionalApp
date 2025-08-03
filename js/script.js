@@ -1,8 +1,6 @@
-  let map;
-
+let map;
 let currentStateData = null;
 
-  // Data for search
 const fireworksData = {
   "al": {
     name: "Alabama",
@@ -306,19 +304,47 @@ const fireworksData = {
   }
 };
 
-  function updateDetailedAnalysis(stateInfo) {
-    const analysisElement = document.getElementById('detailedAnalysis');
-    const expandBtn = document.getElementById('expandBtn');
-    const collapseBtn = document.getElementById('collapseBtn');
-    
-    if (!stateInfo) {
-      analysisElement.innerHTML = '<p>Search for a state to see detailed legal analysis here.</p>';
-      expandBtn.classList.add('hidden');
-      collapseBtn.classList.add('hidden');
-      return;
-    }
+// 🔁 Page load - this should be first
+window.onload = function() {
+  // Recent Updates
+  document.getElementById("change").innerHTML = `
+    2025-07-10: Updated California law.<br><br>
+    2025-07-08: Added Arizona.<br><br>
+    2025-07-05: Fixed Texas restrictions.
+  `;
 
-      analysisElement.innerHTML = `
+  // Initialize the map first
+  map = L.map('map').setView([37.8, -96], 4);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+  }).addTo(map);
+
+  // Set up map click handler
+  map.on('click', function(e) {
+    const analysisElement = document.getElementById('detailedAnalysis');
+    analysisElement.innerHTML = `
+      <h3>County-Level Details</h3>
+      <p>Clicked at coordinates: ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}</p>
+      <p>County-level data coming soon. Currently showing state-level data for ${currentStateData ? currentStateData.name : 'selected state'}.</p>
+      ${currentStateData ? `<p>${currentStateData.summary}</p>` : ''}
+    `;
+  });
+};
+
+// Then your updateDetailedAnalysis function
+function updateDetailedAnalysis(stateInfo) {
+  const analysisElement = document.getElementById('detailedAnalysis');
+  const expandBtn = document.getElementById('expandBtn');
+  const collapseBtn = document.getElementById('collapseBtn');
+  
+  if (!stateInfo) {
+    analysisElement.innerHTML = '<p>Search for a state to see detailed legal analysis here.</p>';
+    expandBtn.classList.add('hidden');
+    collapseBtn.classList.add('hidden');
+    return;
+  }
+
+  analysisElement.innerHTML = `
     <h3>${stateInfo.name} Fireworks Regulations</h3>
     <div class="status-display">
       <span class="status-badge ${stateInfo.status.toLowerCase()}">${stateInfo.status}</span>
@@ -342,7 +368,6 @@ const fireworksData = {
     </div>
   `;
   
-  // Show/hide buttons based on content length
   if (stateInfo.legalDetails.length > 300) {
     expandBtn.classList.remove('hidden');
     collapseBtn.classList.add('hidden');
@@ -351,7 +376,6 @@ const fireworksData = {
     collapseBtn.classList.add('hidden');
   }
   
-  // Set up expand/collapse functionality
   expandBtn.onclick = function() {
     document.getElementById('legalDetails').classList.remove('collapsed');
     document.getElementById('legalDetails').classList.add('expanded');
@@ -367,37 +391,7 @@ const fireworksData = {
   };
 }
 
-// Also add this to handle map clicks if you want to support county-level details
-map.on('click', function(e) {
-  // This would be where you'd add code to handle county-level details
-  // For now we'll just show a generic message
-  const analysisElement = document.getElementById('detailedAnalysis');
-  analysisElement.innerHTML = `
-    <h3>County-Level Details</h3>
-    <p>Clicked at coordinates: ${e.latlng.lat.toFixed(4)}, ${e.latlng.lng.toFixed(4)}</p>
-    <p>County-level data coming soon. Currently showing state-level data for ${currentStateData ? currentStateData.name : 'selected state'}.</p>
-    ${currentStateData ? `<p>${currentStateData.summary}</p>` : ''}
-  `;
-});
-
-  // 🔁 Page load
-  window.onload = function () {
-    // Recent Updates
-    document.getElementById("change").innerHTML = `
-      2025-07-10: Updated California law.<br><br>
-      2025-07-08: Added Arizona.<br><br>
-      2025-07-05: Fixed Texas restrictions.
-    `;
-
-    // 🗺 Initialize the map
-    map = L.map('map').setView([37.8, -96], 4);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(map);
-  };
-
-  // Handle search
-// Handle search - improved version
+// Finally, your search function
 async function searchLocation() {
   const input = document.getElementById('searchInput').value.trim().toLowerCase();
   const resultElement = document.getElementById("searchResult");
@@ -407,24 +401,16 @@ async function searchLocation() {
     return;
   }
 
-  // Show loading state
   resultElement.innerHTML = "Searching...";
   
   try {
-
     let stateInfo = null;
-    currentStateData = stateInfo;
-updateDetailedAnalysis(stateInfo);
-
     let stateName = "";
     
-    // Check for exact abbreviation match (like "ca" for California)
     if (input.length === 2 && fireworksData[input]) {
       stateInfo = fireworksData[input];
       stateName = stateInfo.name;
-    } 
-    // Check for full state name match
-    else {
+    } else {
       for (const [abbrev, data] of Object.entries(fireworksData)) {
         if (data.name.toLowerCase() === input) {
           stateInfo = data;
@@ -434,9 +420,7 @@ updateDetailedAnalysis(stateInfo);
       }
     }
 
-    // If we found state info, use it
     if (stateInfo) {
-      // Search for the state's coordinates
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(stateName)}&countrycodes=us&limit=1`);
       if (!response.ok) throw new Error("Network response was not ok");
       
@@ -448,7 +432,6 @@ updateDetailedAnalysis(stateInfo);
 
       const { lat, lon } = results[0];
       
-      // Update map view
       map.setView([lat, lon], 7);
       L.marker([lat, lon]).addTo(map)
         .bindPopup(`
@@ -458,15 +441,16 @@ updateDetailedAnalysis(stateInfo);
         `)
         .openPopup();
 
-      // Update search result text
       resultElement.innerHTML = `
         <h3>${stateInfo.name}</h3>
         <p><strong>Fireworks Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
         <p><strong>Details:</strong> ${stateInfo.summary}</p>
       `;
-    } 
-    // If no direct match, try a general location search
-    else {
+      
+      // Set current state data and update analysis AFTER we have the info
+      currentStateData = stateInfo;
+      updateDetailedAnalysis(stateInfo);
+    } else {
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(input)}&countrycodes=us&limit=1`);
       if (!response.ok) throw new Error("Network response was not ok");
       
@@ -478,7 +462,6 @@ updateDetailedAnalysis(stateInfo);
 
       const { lat, lon, display_name } = results[0];
       
-      // Try to find which state this location is in
       let foundState = null;
       for (const [abbrev, data] of Object.entries(fireworksData)) {
         if (display_name.toLowerCase().includes(data.name.toLowerCase()) || 
@@ -488,7 +471,6 @@ updateDetailedAnalysis(stateInfo);
         }
       }
 
-      // Update map view
       map.setView([lat, lon], 9);
       const marker = L.marker([lat, lon]).addTo(map);
       
@@ -506,6 +488,9 @@ updateDetailedAnalysis(stateInfo);
           <p><strong>Details:</strong> ${foundState.summary}</p>
           <p class="note">Note: Local regulations may vary. Check with your city/county.</p>
         `;
+        
+        currentStateData = foundState;
+        updateDetailedAnalysis(foundState);
       } else {
         marker.bindPopup(`<b>${display_name}</b><br>No fireworks data available`);
         
@@ -514,10 +499,12 @@ updateDetailedAnalysis(stateInfo);
           <p>No fireworks regulations data available for this area.</p>
           <p>Please check with local authorities.</p>
         `;
+        
+        currentStateData = null;
+        updateDetailedAnalysis(null);
       }
       marker.openPopup();
     }
-    
   } catch (error) {
     console.error("Search error:", error);
     resultElement.innerHTML = `
