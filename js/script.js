@@ -114,16 +114,13 @@ async function searchLocation() {
       if (foundState) {
 
         function showDetailedAnalysis(stateCode) {
-          const stateInfo = fireworksData[stateCode];
-          if (stateInfo) {
-            const analysisHTML = `
-              <h2>${stateInfo.name} - Detailed Analysis</h2>
-              <p><strong>Status:</strong> ${stateInfo.status}</p>
-              <p><strong>Summary:</strong> ${stateInfo.summary}</p>
-              <p><strong>Legal Details:</strong> ${stateInfo.legalDetails}</p>
-              `;
-            document.getElementById('analysis-container').innerHTML = analysisHTML;
-          }
+          const analysisHTML = `
+            <h2>${stateInfo.name} - Detailed Analysis</h2>
+            <p><strong>Status:</strong> ${stateInfo.status}</p>
+            <p><strong>Summary:</strong> ${stateInfo.summary}</p>
+            <p><strong>Legal Details:</strong> ${stateInfo.legalDetails}</p>
+            `;
+          document.getElementById('analysis-container').innerHTML = analysisHTML;
         }
 
         marker.bindPopup(`
@@ -139,7 +136,9 @@ async function searchLocation() {
           <p><strong>Details:</strong> ${foundState.summary}</p>
           <p class="note">Note: Local regulations may vary. Check with your city/county.</p>
         `;
-      } else {
+      } 
+
+      else {
         marker.bindPopup(`<b>${display_name}</b><br>No fireworks data available`);
                 
         resultElement.innerHTML = `
