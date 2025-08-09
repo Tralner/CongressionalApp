@@ -1,5 +1,7 @@
   let map;
 
+  <script src="js/fireworksData.js"></script>
+
   // 🔁 Page load
   window.onload = function () {
     // Recent Updates
