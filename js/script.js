@@ -1,22 +1,47 @@
-  let map;
+let map;
+let currentStateData = null;
 
-  <script src="js/fireworksData.js"></script>
 
-  // 🔁 Page load
-  window.onload = function () {
-    // Recent Updates
-    document.getElementById("change").innerHTML = `
-      2025-07-10: Updated California law.<br><br>
-      2025-07-08: Added Arizona.<br><br>
-      2025-07-05: Fixed Texas restrictions.
-    `;
+function updateDetailedAnalysis(stateInfo) {
+  const analysisElement = document.getElementById('detailedAnalysis');
+  
+  if (!stateInfo) {
+    analysisElement.innerHTML = '<p>Click on a county or use your location to see details</p>';
+    return;
+  }
 
-    // 🗺 Initialize the map
-    map = L.map('map').setView([37.8, -96], 4);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '&copy; OpenStreetMap contributors',
-    }).addTo(map);
-  };
+  analysisElement.innerHTML = `
+    <h3>${stateInfo.name} Fireworks Regulations</h3>
+    <p><strong>Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
+    <p><strong>Summary:</strong> ${stateInfo.summary}</p>
+    <div class="legal-details">
+      <h4>Detailed Legal Information:</h4>
+      <p>${stateInfo.legalDetails}</p>
+    </div>
+  `;
+}
+
+// 🔁 Page load
+window.onload = function () {
+  // Recent Updates
+  document.getElementById("change").innerHTML = `
+    2025-07-10: Updated California law.<br><br>
+    2025-07-08: Added Arizona.<br><br>
+    2025-07-05: Fixed Texas restrictions.
+  `;
+
+  // 🗺 Initialize the map
+  map = L.map('map').setView([37.8, -96], 4);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors',
+  }).addTo(map);
+
+    map.on('click', function(e) {
+    if (currentStateData) {
+      updateDetailedAnalysis(currentStateData);
+    }
+  });
+};
 
   // 🔍 Handle search
 // 🔍 Handle search - improved version
@@ -85,6 +110,8 @@ async function searchLocation() {
         <p><strong>Fireworks Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
         <p><strong>Details:</strong> ${stateInfo.summary}</p>
       `;
+
+      
     } 
     // If no direct match, try a general location search
     else {
@@ -115,24 +142,6 @@ async function searchLocation() {
 
       if (foundState) {
 
-        function updateDetailedAnalysis(stateInfo) {
-          const analysisElement = document.getElementById('detailedAnalysis');
-          
-          if (!stateInfo) {
-            analysisElement.innerHTML = '<p>Search for a state to see detailed legal analysis here.</p>';
-            return;
-          }
-
-          analysisElement.innerHTML = `
-            <h3>${stateInfo.name} Fireworks Regulations</h3>
-            <p><strong>Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
-            <p><strong>Summary:</strong> ${stateInfo.summary}</p>
-            <div class="legal-details">
-              <h4>Detailed Legal Information:</h4>
-              <p>${stateInfo.legalDetails}</p>
-            </div>
-          `;
-        }
 
         marker.bindPopup(`
           <b>${display_name}</b><br>
