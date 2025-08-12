@@ -82,7 +82,8 @@ async function searchLocation() {
     // If we found state info, use it
     
     if (stateInfo) {
-      // Search for the state's coordinates
+      currentStateData = stateInfo; // ✅ set this here
+      updateDetailedAnalysis(stateInfo); // ✅ update the right section
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(stateName)}&countrycodes=us&limit=1`);
       if (!response.ok) throw new Error("Network response was not ok");
 
@@ -141,8 +142,9 @@ async function searchLocation() {
       const marker = L.marker([lat, lon]).addTo(map);
 
       if (foundState) {
-
-
+          currentStateData = foundState; // ✅ correct variable
+          updateDetailedAnalysis(foundState);
+          
         marker.bindPopup(`
           <b>${display_name}</b><br>
           Status: ${foundState.status}<br>
@@ -156,9 +158,6 @@ async function searchLocation() {
           <p><strong>Details:</strong> ${foundState.summary}</p>
           <p class="note">Note: Local regulations may vary. Check with your city/county.</p>
         `;
-
-        currentStateData = stateInfo;
-        updateDetailedAnalysis(stateInfo);
 
       } else {
         marker.bindPopup(`<b>${display_name}</b><br>No fireworks data available`);
