@@ -154,11 +154,9 @@ function updateDetailedAnalysis(stateInfo) {
   const detailTitle = document.getElementById("detailTitle");
   const detailStatus = document.getElementById("detailStatus");
   const detailSummary = document.getElementById("detailSummary");
-  const searchResult = document.getElementById("searchResult");
   const detailLocal = document.getElementById("detailLocal");
   
   // Update content
-  searchResult.textContent = stateInfo.name,stateInfo.status;
   detailTitle.textContent = stateInfo.name;
   detailStatus.innerHTML = `<span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span>`;
   detailSummary.textContent = stateInfo.summary;
@@ -193,7 +191,7 @@ async function updateLocationInfo(lat, lon) {
       }
     }
     
-    if (foundState) {
+    if (!foundState) {
       updateMapWithLocation(lat, lon, foundState, displayName);
       updateDetailedAnalysis(foundState);
       
