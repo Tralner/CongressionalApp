@@ -191,15 +191,14 @@ async function updateLocationInfo(lat, lon) {
       }
     }
     
-    if (!foundState) {
+    if (foundState) {
       updateMapWithLocation(lat, lon, foundState, displayName);
       updateDetailedAnalysis(foundState);
       
-      // Update quick facts
-      document.getElementById("searchResult").innerHTML = `
-        <h3>${displayName}</h3>
-        <p><strong>State:</strong> ${foundState.name}</p>
-        <p><strong>Fireworks Status:</strong> <span class="status-${foundState.status.toLowerCase()}">${foundState.status}</span></p>
+      resultElement.innerHTML = `
+        <h3>${stateInfo.name}</h3>
+        <p><strong>Fireworks Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
+        <p><strong>Details:</strong> ${stateInfo.summary}</p>
       `;
     } else {
       // No state info found
