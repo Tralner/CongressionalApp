@@ -20,26 +20,45 @@
 
   <div class="card">
     <h2>Quick facts</h2>
-    <p id="searchResult">Search for a location to see details here.</p>
+    <div id="searchResult">Search for a location to see details here.</div>
   </div>
 
-<beside>
-  <div class="card">
-    <h2>Interactive Fireworks Legal Map</h2>
-    <div id="map" style="height: 400px; width: 100%; border-radius: 12px; z-index: 1;"></div>
-  </div>
-</beside>
+  <div class="main-content">
+    <div class="beside">
+      <div class="card">
+        <h2>Interactive Fireworks Legal Map</h2>
+        <div id="map" style="height: 400px; width: 100%; border-radius: 12px; z-index: 1;"></div>
+      </div>
+    </div>
 
-  <aside>  <!-- Valid HTML5 -->
-    <div class="card">
-      <h2>Detailed Analysis</h2>  <!-- Fixed typo -->
-      <p>Click on a county or use your location to see details</p>
-    </div>
-    <div class="card">
-      <h2>Recent Updates</h2>
-      <p id="change"></p>
-    </div>
-  </aside>
+    <aside>
+      <div class="card">
+        <h2>Detailed Analysis</h2>
+        <div id="detailedAnalysis">
+          <p>Click on a county or use your location to see detailed information here.</p>
+          <div id="detailedContent" class="hidden">
+            <h3 id="detailTitle"></h3>
+            <div class="detail-section">
+              <h4>Legal Status</h4>
+              <p id="detailStatus"></p>
+            </div>
+            <div class="detail-section">
+              <h4>Summary</h4>
+              <p id="detailSummary"></p>
+            </div>
+            <div class="detail-section">
+              <h4>Local Considerations</h4>
+              <p id="detailLocal"></p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Recent Updates</h2>
+        <p id="change"></p>
+      </div>
+    </aside>
+  </div>
 
   <footer class="footer">
     2025 FireworksLegal | This information is for reference only.

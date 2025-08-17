@@ -1,3 +1,48 @@
+/* Add these to your existing CSS */
+
+.main-content {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 20px;
+}
+
+.beside {
+  flex: 1;
+  min-width: 300px;
+}
+
+aside {
+  width: 300px;
+}
+
+#detailedAnalysis {
+  min-height: 200px;
+}
+
+#detailedContent {
+  transition: all 0.3s ease;
+}
+
+.detail-section {
+  margin-bottom: 15px;
+  padding-bottom: 15px;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-section:last-child {
+  border-bottom: none;
+}
+
+.detail-section h4 {
+  margin-bottom: 5px;
+  color: #444;
+}
+
+.hidden {
+  display: none;
+}
+
 body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: #f5f7fa;
