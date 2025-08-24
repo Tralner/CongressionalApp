@@ -70,12 +70,20 @@ async function searchLocation() {
 
       const { lat, lon } = results[0];
       
-      // Update map view
+      // Update map view and display
       updateMapWithLocation(lat, lon, stateInfo, stateName);
       updateDetailedAnalysis(stateInfo);
+      
+      // FIX: Update the search result display
+      resultElement.innerHTML = `
+        <h3>${stateInfo.name}</h3>
+        <p><strong>Fireworks Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
+        <p><strong>Details:</strong> ${stateInfo.summary}</p>
+        <p class="note">Note: Local regulations may vary. Check with your city/county.</p>
+      `;
     } 
     else {
-      // General location search
+      // General location search (LEAVE THIS ELSE BLOCK UNCHANGED - IT'S WORKING)
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(input)}&countrycodes=us&limit=1`);
       if (!response.ok) throw new Error("Network response was not ok");
       
@@ -124,7 +132,7 @@ async function searchLocation() {
   } catch (error) {
     console.error("Search error:", error);
     resultElement.innerHTML = `
-      <p class="error">An error occurred during search.</p>
+      <p class='error'>An error occurred during search.</p>
       <p>Please try again later or check your internet connection.</p>
     `;
   }
