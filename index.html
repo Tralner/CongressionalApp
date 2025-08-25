@@ -4,15 +4,19 @@
   <title>FireworksLegal</title>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <!-- CSS -->
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="css/styles.css"> <!-- Ensure path is correct -->
 </head>
 <body>
   <header class="topper">
-    <h1>Fireworks Laws Made Simple</h1>
-    <div class="search-bar">
+    <h1>Laws Made Simple</h1>
+    <div class="dropdown">
+      <select id="categoryDropdown" class="category-dropdown">
+        <option value="Fireworks Laws">Fireworks</option>
+        <option value="Fishing Laws">Fishing</option>
+        <option value="Hunting Laws">Hunting</option>
+      </select>
+      <div class="search-bar">
       <input type="text" id="searchInput" placeholder="🔍 Search by state (e.g., 'CA' or 'California')">
       <button onclick="searchLocation()">Search</button>
     </div>
