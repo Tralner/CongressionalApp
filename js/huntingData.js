@@ -1,4 +1,4 @@
-const Hunting = {
+const HuntingData = {
     "al": {
         name: "Alabama",
         status: "Legal with license",

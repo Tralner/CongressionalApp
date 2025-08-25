@@ -1,5 +1,3 @@
-/* Add these to your existing CSS */
-
 .main-content {
   display: flex;
   flex-wrap: wrap;
@@ -85,7 +83,6 @@ beside {
   background-color: #f5f7fa;
 }
 
-/* Remove GitHub Pages' default container padding */
 .container-lg {
   max-width: 100% !important;
   padding: 0 !important;
