@@ -178,8 +178,7 @@ async function searchLocation() {
 async function updateLocationInfo(lat, lon) {
   try {
     const category = document.getElementById('categoryDropdown').value;
-    const dataSet = category === 'fishing' ? fishingData : 
-                   category === 'hunting' ? huntingData : fireworksData;
+    const dataSet = category === 'fishing' ? fishingData : category === 'hunting' ? huntingData : fireworksData;
 
     // Reverse geocode to get location info
     const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
