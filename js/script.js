@@ -1,5 +1,3 @@
-// Your existing fireworksData object remains the same
-
 let map;
 let currentMarker = null;
 
@@ -17,16 +15,40 @@ window.onload = function () {
     attribution: '&copy; OpenStreetMap contributors',
   }).addTo(map);
 
-  // Add click handler for the map
   map.on('click', function(e) {
-    // Reverse geocode to get location info
     updateLocationInfo(e.latlng.lat, e.latlng.lng);
   });
+
+  document.getElementById('categoryDropdown').addEventListener('change', function() {
+    // Clear previous results when changing category
+    document.getElementById('searchResult').innerHTML = 'Select a category and search for a location.';
+    document.getElementById('detailedContent').classList.add('hidden');
+    document.getElementById('detailedAnalysis').querySelector('p').style.display = 'block';
+    
+    if (currentMarker) {
+      map.removeLayer(currentMarker);
+      currentMarker = null;
+    }
+    
+    // Reset map view
+    map.setView([37.8, -96], 4);
+  });
 };
+
+// Helper function to get category title
+function getCategoryTitle(category) {
+  switch(category) {
+    case 'fishing': return 'Fishing';
+    case 'hunting': return 'Hunting';
+    case 'fireworks': 
+    default: return 'Fireworks';
+  }
+}
 
 async function searchLocation() {
   const input = document.getElementById('searchInput').value.trim().toLowerCase();
   const resultElement = document.getElementById("searchResult");
+  const category = document.getElementById('categoryDropdown').value; // FIX: Added this line
 
   if (!input) {
     resultElement.innerHTML = "<p class='error'>Please enter a state name or abbreviation.</p>";
@@ -37,18 +59,33 @@ async function searchLocation() {
   resultElement.innerHTML = "<p>Searching...</p>";
   
   try {
-    // First try to match against our fireworks data
+    // Get the appropriate data based on category
+    let dataSet;
+    switch(category) {
+      case 'fishing':
+        dataSet = fishingData;
+        break;
+      case 'hunting':
+        dataSet = huntingData;
+        break;
+      case 'fireworks':
+      default:
+        dataSet = fireworksData;
+        break;
+    }
+
+    // First try to match against our data
     let stateInfo = null;
     let stateName = "";
     
     // Check for exact abbreviation match
-    if (input.length === 2 && fireworksData[input]) {
-      stateInfo = fireworksData[input];
+    if (input.length === 2 && dataSet[input]) {
+      stateInfo = dataSet[input];
       stateName = stateInfo.name;
     } 
     // Check for full state name match
     else {
-      for (const [abbrev, data] of Object.entries(fireworksData)) {
+      for (const [abbrev, data] of Object.entries(dataSet)) {
         if (data.name.toLowerCase() === input) {
           stateInfo = data;
           stateName = data.name;
@@ -74,16 +111,16 @@ async function searchLocation() {
       updateMapWithLocation(lat, lon, stateInfo, stateName);
       updateDetailedAnalysis(stateInfo);
       
-      // FIX: Update the search result display
+      // Update the search result display
       resultElement.innerHTML = `
         <h3>${stateInfo.name}</h3>
-        <p><strong>Fireworks Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
+        <p><strong>${getCategoryTitle(category)} Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
         <p><strong>Details:</strong> ${stateInfo.summary}</p>
         <p class="note">Note: Local regulations may vary. Check with your city/county.</p>
       `;
     } 
     else {
-      // General location search (LEAVE THIS ELSE BLOCK UNCHANGED - IT'S WORKING)
+      // General location search
       const response = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(input)}&countrycodes=us&limit=1`);
       if (!response.ok) throw new Error("Network response was not ok");
       
@@ -97,7 +134,7 @@ async function searchLocation() {
       
       // Try to find which state this location is in
       let foundState = null;
-      for (const [abbrev, data] of Object.entries(fireworksData)) {
+      for (const [abbrev, data] of Object.entries(dataSet)) {
         if (display_name.toLowerCase().includes(data.name.toLowerCase()) || 
             display_name.toLowerCase().includes(`, ${abbrev.toUpperCase()}`)) {
           foundState = data;
@@ -112,14 +149,14 @@ async function searchLocation() {
         resultElement.innerHTML = `
           <h3>${display_name}</h3>
           <p><strong>State:</strong> ${foundState.name}</p>
-          <p><strong>Fireworks Status:</strong> <span class="status-${foundState.status.toLowerCase()}">${foundState.status}</span></p>
+          <p><strong>${getCategoryTitle(category)} Status:</strong> <span class="status-${foundState.status.toLowerCase()}">${foundState.status}</span></p>
           <p><strong>Details:</strong> ${foundState.summary}</p>
           <p class="note">Note: Local regulations may vary. Check with your city/county.</p>
         `;
       } else {
         resultElement.innerHTML = `
           <h3>${display_name}</h3>
-          <p class="error">No fireworks regulations data available for this area.</p>
+          <p class="error">No ${getCategoryTitle(category).toLowerCase()} regulations data available for this area.</p>
           <p>Please check with local authorities.</p>
         `;
         
@@ -129,12 +166,65 @@ async function searchLocation() {
       }
     }
     
-  } catch (error) {
+  } catch (error) { // FIX: Added missing closing brace and catch block
     console.error("Search error:", error);
     resultElement.innerHTML = `
       <p class='error'>An error occurred during search.</p>
       <p>Please try again later or check your internet connection.</p>
     `;
+  }
+}
+
+async function updateLocationInfo(lat, lon) {
+  try {
+    const category = document.getElementById('categoryDropdown').value;
+    const dataSet = category === 'fishing' ? fishingData : 
+                   category === 'hunting' ? huntingData : fireworksData;
+
+    // Reverse geocode to get location info
+    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
+    if (!response.ok) throw new Error("Reverse geocoding failed");
+    
+    const result = await response.json();
+    const displayName = result.display_name || "Selected Location";
+    
+    // Try to find state info
+    let foundState = null;
+    const address = result.address || {};
+    
+    for (const [abbrev, data] of Object.entries(dataSet)) {
+      if (address.state && 
+          (address.state.toLowerCase() === data.name.toLowerCase() || 
+           address.state.toLowerCase() === abbrev.toLowerCase())) {
+        foundState = data;
+        break;
+      }
+    }
+    
+    if (foundState) {
+      updateMapWithLocation(lat, lon, foundState, displayName);
+      updateDetailedAnalysis(foundState);
+      
+      document.getElementById("searchResult").innerHTML = `
+        <h3>${foundState.name}</h3>
+        <p><strong>${getCategoryTitle(category)} Status:</strong> <span class="status-${foundState.status.toLowerCase()}">${foundState.status}</span></p>
+        <p><strong>Details:</strong> ${foundState.summary}</p>
+      `;
+    } else {
+      // No state info found
+      updateMapWithLocation(lat, lon, {status: "Unknown", summary: "No data available"}, displayName);
+      
+      document.getElementById("searchResult").innerHTML = `
+        <h3>${displayName}</h3>
+        <p class="error">No ${getCategoryTitle(category).toLowerCase()} data available for this location</p>
+      `;
+      
+      // Clear detailed analysis
+      document.getElementById("detailedContent").classList.add("hidden");
+      document.getElementById("detailedAnalysis").querySelector("p").style.display = "block";
+    }
+  } catch (error) {
+    console.error("Location update error:", error);
   }
 }
 
@@ -175,53 +265,4 @@ function updateDetailedAnalysis(stateInfo) {
   // Show the detailed content
   document.getElementById("detailedAnalysis").querySelector("p").style.display = "none";
   detailedContent.classList.remove("hidden");
-}
-
-async function updateLocationInfo(lat, lon) {
-  try {
-    // Reverse geocode to get location info
-    const response = await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`);
-    if (!response.ok) throw new Error("Reverse geocoding failed");
-    
-    const result = await response.json();
-    const displayName = result.display_name || "Selected Location";
-    
-    // Try to find state info
-    let foundState = null;
-    const address = result.address || {};
-    
-    for (const [abbrev, data] of Object.entries(fireworksData)) {
-      if (address.state && 
-          (address.state.toLowerCase() === data.name.toLowerCase() || 
-           address.state.toLowerCase() === abbrev.toLowerCase())) {
-        foundState = data;
-        break;
-      }
-    }
-    
-    if (foundState) {
-      updateMapWithLocation(lat, lon, foundState, displayName);
-      updateDetailedAnalysis(foundState);
-      
-      resultElement.innerHTML = `
-        <h3>${stateInfo.name}</h3>
-        <p><strong>Fireworks Status:</strong> <span class="status-${stateInfo.status.toLowerCase()}">${stateInfo.status}</span></p>
-        <p><strong>Details:</strong> ${stateInfo.summary}</p>
-      `;
-    } else {
-      // No state info found
-      updateMapWithLocation(lat, lon, {status: "Unknown", summary: "No data available"}, displayName);
-      
-      document.getElementById("searchResult").innerHTML = `
-        <h3>${displayName}</h3>
-        <p class="error">No fireworks data available for this location</p>
-      `;
-      
-      // Clear detailed analysis
-      document.getElementById("detailedContent").classList.add("hidden");
-      document.getElementById("detailedAnalysis").querySelector("p").style.display = "block";
-    }
-  } catch (error) {
-    console.error("Location update error:", error);
-  }
 }
