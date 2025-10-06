@@ -256,8 +256,8 @@ body, html {
 
 .search-area {
   display: flex;
-  gap: 6px; /* small space between items */
-  align-items: center;
+  gap: 6px; 
+  align-items: right;
 }
 
 .search-area input,
