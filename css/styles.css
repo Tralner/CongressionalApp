@@ -256,13 +256,6 @@ body, html {
 
 .search-area {
   display: flex;
-  gap: 6px; 
+  gap: 12px; 
   align-items: right;
-}
-
-.search-area input,
-.search-area select,
-.search-area button {
-  padding: 8px 10px;
-  font-size: 16px;
 }
