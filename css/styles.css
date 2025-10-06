@@ -253,3 +253,16 @@ body, html {
 .category-dropdown:hover {
   border-color: #0056b3;
 }
+
+.search-area {
+  display: flex;
+  gap: 6px; /* small space between items */
+  align-items: center;
+}
+
+.search-area input,
+.search-area select,
+.search-area button {
+  padding: 8px 10px;
+  font-size: 16px;
+}

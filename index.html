@@ -8,18 +8,20 @@
   <link rel="stylesheet" href="css/styles.css"> <!-- Ensure path is correct -->
 </head>
 <body>
+  <div class="search-area">
   <header class="topper">
     <h1>LawScout</h1>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="🔍 Search by state (e.g., 'CA' or 'California')">
-      <button onclick="searchLocation()">Search</button>
-    </div>
-    <div class="dropdown">
-      <select id="categoryDropdown" class="category-dropdown">
-        <option value="fireworks">Fireworks</option>
-        <option value="fishing">Fishing</option>
-        <option value="hunting">Hunting</option>
-      </select>
+      <div class="search-bar">
+        <input type="text" id="searchInput" placeholder="🔍 Search by state (e.g., 'CA' or 'California')">
+        <button onclick="searchLocation()">Search</button>
+      </div>
+      <div class="dropdown">
+        <select id="categoryDropdown" class="category-dropdown">
+          <option value="fireworks">Fireworks</option>
+          <option value="fishing">Fishing</option>
+          <option value="hunting">Hunting</option>
+        </select>
+      </div>
     </div>
   </header>
 
