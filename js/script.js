@@ -4,9 +4,9 @@ let currentMarker = null;
 window.onload = function () {
   // Recent Updates
   document.getElementById("change").innerHTML = `
-    2025-07-10: Updated California law.<br><br>
-    2025-07-08: Added Arizona.<br><br>
-    2025-07-05: Fixed Texas restrictions.
+    2025-10-24: Washington State Raises Hunting & Fishing License Fees.<br><br>
+    2025-08-28: Interior Dept. Expands Hunting & Fishing on Refuge Lands.<br><br>
+    2025-04-24: Kansas Allows Year-Round Fireworks Sales.
   `;
 
   // Initialize the map
